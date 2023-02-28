@@ -123,6 +123,45 @@ void Unit::dodge(){
     dodge_on = true;
 }
 
+void Unit::equip(Equipment *wpn){
+    vector<int> eqstat;
+if(equipment == NULL){
+    equipment = wpn;
+    eqstat = equipment->getStat();
+    hpmax += eqstat[0];
+    atk += eqstat[1];
+    def += eqstat[2];
+}
+else{
+    eqstat = equipment->getStat();
+    hpmax -= eqstat[0];
+    atk -= eqstat[1];
+    def -= eqstat[2];
+    equipment = wpn;
+    eqstat = equipment->getStat();
+    hpmax += eqstat[0];
+    atk += eqstat[1];
+    def += eqstat[2]; 
+    if(hp > hpmax) hp = hpmax;
+}
+}
+
+Equipment::Equipment(int h,int a,int d){
+hpmax = h;
+atk = a;
+def = d;
+}
+
+vector<int> Equipment::getStat(){
+vector<int> stat;
+stat.push_back(hpmax);
+stat.push_back(atk);
+stat.push_back(def);
+return stat;
+}
+
+
+
 void drawScene(char p_action,int p,char m_action,int m){
 	cout << "                                                       \n";
 	if(p_action == 'A'){
